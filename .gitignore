@@ -1,0 +1,9 @@
+# exclude every file, but not directory/subdirectory
+/**/*
+# except whitelist
+!/rs232monitor
+!/**/*.md
+!/**/*.pdf
+!/**/*.git*
+!/**/*.vhd
+# blacklist
