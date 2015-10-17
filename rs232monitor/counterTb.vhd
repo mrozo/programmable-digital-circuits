@@ -4,7 +4,7 @@ use ieee.numeric_std.ALL;
 
 ENTITY counterTb IS
 	Generic (
-		counter1Width          : integer           :=2;
+		counter1Width          : integer           :=1;
 		counter2Width          : integer           :=5;
 		counter3Width          : integer           :=8;
 		counter4Width          : integer           :=16

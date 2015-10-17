@@ -4,7 +4,7 @@ use ieee.numeric_std.ALL;
 
 entity counter is
 	 Generic (
-		width        : integer                     := 8
+		width        : integer                     := 32
 	 );
     Port ( 
 		rst          : in  STD_LOGIC;
