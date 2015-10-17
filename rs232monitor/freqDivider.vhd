@@ -18,45 +18,49 @@ end freqDivider;
 
 architecture Behavioral of freqDivider is
 
-    function log2_float(val : positive) return natural is
+    function SizeInBits(val : positive) return natural is
     begin
         return integer(ceil(log2(real(val))));
     end function;
 
     COMPONENT counter
     Generic (
-        width                : integer                     
+        width                : integer           := (SizeInBits(divisor))                    
     );
     PORT(
         rst                  : IN  std_logic;
         clk                  : IN  std_logic;
         clear                : IN  std_logic;
-        state                : OUT std_logic_vector(
-                                        log2_float(divisor) downto 0
-                                    )
-            );
+        state                : OUT std_logic_vector((SizeInBits(divisor)-1) downto 0)
+    );
     END COMPONENT;
 
     signal counterClk        : STD_LOGIC         := '0';
- --   signal output            : STD_LOGIC         := '0';
-    signal state             : std_logic_vector(
-                                    log2_float(divisor) downto 0
-                                );
+	signal counterRst        : STD_LOGIC         := '0';
+    signal state             : std_logic_vector((SizeInBits(divisor)-1) downto 0);
  begin
 
     c1: counter 
     GENERIC MAP (
-        width => divisor
+        width => (SizeInBits(divisor))
     )
     PORT MAP (
-        rst => rst,
+        rst => counterRst,
         clk => counterClk,
         clear => '0',
         state => state
     );
+	 
+	 counterRst <= '1' when rst='1' else
+                  '1' when (to_integer(unsigned(state)) = (divisor-1)) else
+                  '0';
+	 
     counterClk <= clk AND enable;
 
-    output <=   '1';
+    output <= '1' when (rst='1') else
+              '1' when (to_integer(unsigned(state)) = 0) else
+              '1' when (to_integer(unsigned(state))<(divisor/2)) else	 
+              '0';
 
 end Behavioral;
 
