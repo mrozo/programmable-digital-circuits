@@ -1,0 +1,31 @@
+# Clock:
+NET "clk"          LOC = "T9" ; # 50 MHz clock
+# Push-buttons:
+NET "rst"          LOC = "L14" ; # pressed high BTN3
+# RS232:
+NET "rx"           LOC = "T13" ; # RS 232 RXD
+# Seven-segment LED display:
+NET "ledAn<3>"     LOC = "E13" ; # leftmost digit, active low
+NET "ledAn<2>"     LOC = "F14" ; # active low
+NET "ledAn<1>"     LOC = "G14" ; # active low
+NET "ledAn<0>"     LOC = "D14" ; # rightmost digit, active low
+#
+NET "ledSeg<7>"    LOC = "E14" ; # segment 'a', active low
+NET "ledSeg<6>" LOC = "G13" ; # segment 'b', active low
+NET "ledSeg<5>" LOC = "N15" ; # segment 'c', active low
+NET "ledSeg<4>" LOC = "P15" ; # segment 'd', active low
+NET "ledSeg<3>" LOC = "R16" ; # segment 'e', active low
+NET "ledSeg<2>" LOC = "F13" ; # segment 'f', active low
+NET "ledSeg<1>" LOC = "N16" ; # segment 'g', active low
+NET "ledSeg<0>" LOC = "P16" ; # segment 'dp', active low
+#
+
+
+#NET "leds_o<0>" LOC = "K12" ; # high on
+#NET "leds_o<1>" LOC = "P14" ; # high on
+#NET "leds_o<2>" LOC = "L12" ; # high on
+#NET "leds_o<3>" LOC = "N14" ; # high on
+#NET "leds_o<4>" LOC = "P13" ; # high on
+#NET "leds_o<5>" LOC = "N12" ; # high on
+#NET "leds_o<6>" LOC = "P12" ; # high on
+#NET "leds_o<7>" LOC = "P11" ; # high on
