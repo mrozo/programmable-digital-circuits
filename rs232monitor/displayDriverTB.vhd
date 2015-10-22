@@ -56,13 +56,20 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100ms.
-      wait for 100ms;	
-
+      -- hold reset state for 1ms.
+      wait for 1ms;	
       wait for clk_period*10;
-
-      -- insert stimulus here 
-
+      
+        d0 <= "0001";
+        d1 <= "0010";
+        d2 <= "0100";
+        d3 <= "1000";
+        wait for 5ms;	
+        d0 <= "0011";
+        d1 <= "0110";
+        d2 <= "1100";
+        d3 <= "1001";
+        wait;
       wait;
    end process;
 

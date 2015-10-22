@@ -17,7 +17,7 @@ entity displayDriver is
 end displayDriver;
 
 architecture Behavioral of displayDriver is
-    TYPE FONT_ARRAY IS ARRAY (1 to 16) OF std_logic_vector(6 downto 0);
+    TYPE FONT_ARRAY IS ARRAY (0 to 15) OF std_logic_vector(6 downto 0);
     
     CONSTANT font            : FONT_ARRAY        := (
         "0000001", -- 0
@@ -55,7 +55,8 @@ architecture Behavioral of displayDriver is
                                                  := "00"; 
      signal currentDigit     : std_logic_vector(3 downto 0);
 	 signal anClk            : std_logic         := '0';
-     signal digits           : std_logic_vector(15 downto 0);
+     -- signal digits           : std_logic_vector(15 downto 0);
+     -- signal output           : std_logic_vector(31 downto 0);
 begin
 
     --digits <= d3 & d2 & d1 & d0;
@@ -82,14 +83,29 @@ begin
     PORT MAP (clk => clk, rst => rst, enable => '1', output => anClk);
 
 
+    process(rst, anClk)
+    
+    begin
+        if rst='1' then
+            seg <= "11111111";
+        elsif rising_edge(anClk) then
+            case currentDigitNumber is
+                when "11" => seg <= font(to_integer(unsigned(d3))) & '1';
+                when "10" => seg <= font(to_integer(unsigned(d2))) & '1';
+                when "01" => seg <= font(to_integer(unsigned(d1))) & '1';
+                when "00" => seg <= font(to_integer(unsigned(d0))) & '1';
+                when others => seg <= "11111111";
+            end case;
+        end if;
+    end process;
+
 	process(rst, anClk)
 		
 	begin
         if rst='1' then
             currentDigitNumber <= "00";
-            an <= "1000";
         elsif rising_edge(anClk) then
-            currentDigitNumber <= std_logic_vector(to_unsigned(to_integer(unsigned( currentDigitNumber )) + 1, 2));
+            currentDigitNumber <= std_logic_vector(to_unsigned(to_integer(unsigned(currentDigitNumber )) + 1, 2));
         end if;
 	end process;
     
@@ -98,7 +114,7 @@ begin
         
     begin
         if rst='1' then
-        
+            an <= "1000";
         elsif rising_edge(clk) then
             case currentDigitNumber is
                 when "00" => an <= "1000";
