@@ -37,9 +37,9 @@ architecture Behavioral of Rs232Monitor is
             );
     END COMPONENT;
     
-    signal data              : std_logic_vector;
-    signal dataReady         : std_logic_vector;
-    signal rxLineRst         : std_logic_vector;
+    signal data              : std_logic_vector(7 downto 0);
+    signal dataReady         : std_logic;
+    signal rxLineRst         : std_logic;
     signal d0                : std_logic_vector(3 downto 0);
     signal d1                : std_logic_vector(3 downto 0);
 
@@ -68,14 +68,13 @@ begin
     begin
         if rst='1' then
             rxLineRst <= '1';
-            
+
         elsif rising_edge(clk) then
             rxLineRst <= '0';
             
             if dataReady = '1' then
                 d0 <= data(3 downto 0);
                 d1 <= data(7 downto 0);
-                dataCopied <= '1';
                 rxLineRst  <= '1';
                 
             end if;
